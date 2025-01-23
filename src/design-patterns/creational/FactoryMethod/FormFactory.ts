@@ -14,7 +14,7 @@ interface FormBase {
 class LoginForm implements FormBase {
   private form: Form[];
 
-  LoginForm() {
+  constructor() {
     this.form = [
       {
         label: "Email",
@@ -39,7 +39,7 @@ class LoginForm implements FormBase {
 class RegisterForm implements FormBase {
   private form: Form[];
 
-  RegisterForm() {
+  constructor() {
     this.form = [
       {
         label: "Name",
