@@ -25,7 +25,7 @@ type GPUAMDModel =
 
 type GPUModel = GPUNVidiaModel | GPUAMDModel;
 
-interface Builder {
+interface ComputerBuilderBase {
   reset(): void;
   setCPU(cpu: "Intel" | "AMD", model: CPUModel): void;
   setGPU(gpu: "NVidia" | "AMD", model: GPUModel): void;
@@ -42,7 +42,7 @@ class Computer {
   os: string;
 }
 
-class ComputerBuilder implements Builder {
+class ComputerBuilder implements ComputerBuilderBase {
   private computer: Computer;
 
   constructor() {
@@ -77,9 +77,9 @@ class ComputerBuilder implements Builder {
 }
 
 class Director {
-  private builder: Builder;
+  private builder: ComputerBuilderBase;
 
-  constructor(builder: Builder) {
+  constructor(builder: ComputerBuilderBase) {
     this.builder = builder;
   }
 
@@ -116,16 +116,22 @@ class Director {
   }
 }
 
-const builder = new ComputerBuilder();
-const director = new Director(builder);
+class Application {
+  public static main(): void {
+    const builder = new ComputerBuilder();
+    const director = new Director(builder);
 
-director.buildBasicComputer();
-const basicComputer: Computer = builder.getComputer();
+    director.buildBasicComputer();
+    const basicComputer: Computer = builder.getComputer();
 
-// with the same builder and director
-director.buildIntermediateComputer();
-const advancedComputer: Computer = builder.getComputer();
+    // with the same builder and director
+    director.buildIntermediateComputer();
+    const advancedComputer: Computer = builder.getComputer();
 
-// again, with the same builder and director
-director.buildGamerComputer();
-const gamerComputer: Computer = builder.getComputer();
+    // again, with the same builder and director
+    director.buildGamerComputer();
+    const gamerComputer: Computer = builder.getComputer();
+  }
+}
+
+Application.main();
