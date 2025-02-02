@@ -3,11 +3,11 @@ export type Transmission = "Automatic" | "Manual";
 export type BodyType = "Sedan" | "Hatch";
 export type Color = "White" | "Black" | "Gray";
 
-class Car implements Car {
-  engine: Engine;
-  transmission: Transmission;
-  bodyType: BodyType;
-  color: Color;
+export class Car implements Car {
+  private engine: Engine | undefined;
+  private transmission: Transmission | undefined;
+  private bodyType: BodyType | undefined;
+  private color: Color | undefined;
 
   constructor(car?: Car) {
     if (car) {
@@ -18,8 +18,20 @@ class Car implements Car {
     }
   }
 
-  clone(): Car {
-    return new Car(this);
+  setEngine(engine: Engine): void {
+    this.engine = engine;
+  }
+
+  setTransmission(transmission: Transmission): void {
+    this.transmission = transmission;
+  }
+
+  setBodyType(bodyType: BodyType): void {
+    this.bodyType = bodyType;
+  }
+
+  setColor(color: Color): void {
+    this.color = color;
   }
 }
 
@@ -32,7 +44,7 @@ export interface CarBuilderBase {
 }
 
 export class CarBuilder implements CarBuilderBase {
-  private car: Car;
+  protected car: Car = new Car();
 
   constructor() {
     this.reset();
@@ -43,19 +55,19 @@ export class CarBuilder implements CarBuilderBase {
   }
 
   setEngine(engine: Engine): void {
-    this.car.engine = engine;
+    this.car.setEngine(engine);
   }
 
   setTransmission(transmission: Transmission): void {
-    this.car.transmission = transmission;
+    this.car.setTransmission(transmission);
   }
 
   setBodyType(bodyType: BodyType): void {
-    this.car.bodyType = bodyType;
+    this.car.setBodyType(bodyType);
   }
 
   setColor(color: Color): void {
-    this.car.color = color;
+    this.car.setColor(color);
   }
 
   getCar(): Car {
@@ -107,10 +119,6 @@ class Application {
 
     director.buildCobalt();
     const cobalt: Car = builder.getCar();
-
-    console.log(onix);
-    console.log(onixSedan);
-    console.log(cobalt);
   }
 }
 

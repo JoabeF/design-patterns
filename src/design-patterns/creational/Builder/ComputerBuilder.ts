@@ -40,10 +40,18 @@ class Computer {
   ram: number;
   storage: string;
   os: string;
+
+  constructor() {
+    this.cpu = "";
+    this.gpu = "";
+    this.ram = 0;
+    this.storage = "";
+    this.os = "";
+  }
 }
 
 class ComputerBuilder implements ComputerBuilderBase {
-  private computer: Computer;
+  private computer: Computer = new Computer();
 
   constructor() {
     this.reset();
@@ -131,6 +139,10 @@ class Application {
     // again, with the same builder and director
     director.buildGamerComputer();
     const gamerComputer: Computer = builder.getComputer();
+
+    console.log("basicComputer", basicComputer);
+    console.log("advancedComputer", advancedComputer);
+    console.log("gamerComputer", gamerComputer);
   }
 }
 
